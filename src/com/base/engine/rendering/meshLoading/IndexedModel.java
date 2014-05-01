@@ -47,34 +47,59 @@ public class IndexedModel
 
 	public void calcTangents()
 	{
-		for(int i = 0; i < indices.size(); i += 3)
+		for(int i = 0; i < positions.size()-2; i += 3)
 		{
-			int i0 = indices.get(i);
-			int i1 = indices.get(i + 1);
-			int i2 = indices.get(i + 2);
-
-			Vector3f edge1 = positions.get(i1).sub(positions.get(i0));
-			Vector3f edge2 = positions.get(i2).sub(positions.get(i0));
-
-			float deltaU1 = texCoords.get(i1).getX() - texCoords.get(i0).getX();
-			float deltaV1 = texCoords.get(i1).getY() - texCoords.get(i0).getY();
-			float deltaU2 = texCoords.get(i2).getX() - texCoords.get(i0).getX();
-			float deltaV2 = texCoords.get(i2).getY() - texCoords.get(i0).getY();
-
-			float f = 1.0f/(deltaU1*deltaV2 - deltaU2*deltaV1);
-
-			Vector3f tangent = new Vector3f(0,0,0);
-			tangent.setX(f * (deltaV2 * edge1.getX() - deltaV1 * edge2.getX()));
-			tangent.setY(f * (deltaV2 * edge1.getY() - deltaV1 * edge2.getY()));
-			tangent.setZ(f * (deltaV2 * edge1.getZ() - deltaV1 * edge2.getZ()));
-
-			tangents.get(i0).set(tangents.get(i0).add(tangent));
-			tangents.get(i1).set(tangents.get(i1).add(tangent));
-			tangents.get(i2).set(tangents.get(i2).add(tangent));
+			Vector3f v0 = positions.get(i+0);
+			Vector3f v1 = positions.get(i+1);
+			Vector3f v2 = positions.get(i+2);
+			
+			Vector2f uv0 = texCoords.get(i+0);
+			Vector2f uv1 = texCoords.get(i+1);
+			Vector2f uv2 = texCoords.get(i+2);
+			
+			Vector3f deltaPos1 = v1.sub(v0);
+			Vector3f deltaPos2 = v2.sub(v0);
+			
+			Vector2f deltaUV1 = uv1.sub(uv0);
+			Vector2f deltaUV2 = uv2.sub(uv0);
+			
+			float r = 1.0f / (deltaUV1.getX() * deltaUV2.getY() - deltaUV1.getY() * deltaUV2.getX());
+			Vector3f tangent = (deltaPos1.mul(deltaUV2.getY()).sub(deltaPos2.mul(deltaUV1.getY()))).mul(r);
+			
+			tangents.get(i).set(tangent.normalized());
+			tangents.get(i+1).set(tangent.normalized());
+			tangents.get(i+2).set(tangent.normalized());
+			System.out.println(tangents.get(i).toString());
 		}
-
-		for(int i = 0; i < tangents.size(); i++)
-			tangents.get(i).set(tangents.get(i).normalized());
+		
+//		for(int i = 0; i < indices.size(); i += 3)
+//		{
+//			int i0 = indices.get(i);
+//			int i1 = indices.get(i + 1);
+//			int i2 = indices.get(i + 2);
+//
+//			Vector3f edge1 = positions.get(i1).sub(positions.get(i0));
+//			Vector3f edge2 = positions.get(i2).sub(positions.get(i0));
+//
+//			float deltaU1 = texCoords.get(i1).getX() - texCoords.get(i0).getX();
+//			float deltaV1 = texCoords.get(i1).getY() - texCoords.get(i0).getY();
+//			float deltaU2 = texCoords.get(i2).getX() - texCoords.get(i0).getX();
+//			float deltaV2 = texCoords.get(i2).getY() - texCoords.get(i0).getY();
+//
+//			float f = 1.0f/(deltaU1*deltaV2 - deltaU2*deltaV1);
+//
+//			Vector3f tangent = new Vector3f(0,0,0);
+//			tangent.setX(f * (deltaV2 * edge1.getX() - deltaV1 * edge2.getX()));
+//			tangent.setY(f * (deltaV2 * edge1.getY() - deltaV1 * edge2.getY()));
+//			tangent.setZ(f * (deltaV2 * edge1.getZ() - deltaV1 * edge2.getZ()));
+//
+//			tangents.get(i0).set(tangents.get(i0).add(tangent));
+//			tangents.get(i1).set(tangents.get(i1).add(tangent));
+//			tangents.get(i2).set(tangents.get(i2).add(tangent));
+//		}
+//
+//		for(int i = 0; i < tangents.size(); i++)
+//			tangents.get(i).set(tangents.get(i).normalized());
 	}
 
 	public ArrayList<Vector3f> getPositions() { return positions; }

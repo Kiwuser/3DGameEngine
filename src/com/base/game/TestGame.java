@@ -10,8 +10,8 @@ public class TestGame extends Game
 	{
 		Mesh mesh = new Mesh("plane3.obj");
 		Material material = new Material();//new Texture("test.png"), new Vector3f(1,1,1), 1, 8);
-		material.addTexture("diffuse", new Texture("bricks.jpg"));
-		material.addTexture("normalMap", new Texture("bricks_normal.jpg"));
+		material.addTexture("diffuse", new Texture("bricks2.jpg"));
+		material.addTexture("normalMap", new Texture("bricks2_normal.jpg"));
 		material.addFloat("specularIntensity", 1);
 		material.addFloat("specularPower", 8);
 
@@ -30,7 +30,7 @@ public class TestGame extends Game
 		planeObject.getTransform().getPos().set(0, -1, 5);
 
 		GameObject directionalLightObject = new GameObject();
-		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0,0,1), 0.4f);
+		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(1,1,1), 0.4f);
 
 		directionalLightObject.addComponent(directionalLight);
 

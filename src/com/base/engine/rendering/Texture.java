@@ -65,7 +65,6 @@ public class Texture
 	private static TextureResource loadTexture(String fileName)
 	{
 		String[] splitArray = fileName.split("\\.");
-		@SuppressWarnings("unused")
 		String ext = splitArray[splitArray.length - 1];
 		
 		try

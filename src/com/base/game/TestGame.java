@@ -12,33 +12,25 @@ public class TestGame extends Game
 		Material material = new Material();//new Texture("test.png"), new Vector3f(1,1,1), 1, 8);
 		material.addTexture("diffuse", new Texture("bricks.jpg"));
 		material.addTexture("normalMap", new Texture("bricks_normal.jpg"));
-		material.addTexture("dispMap", new Texture("bricks_disp.png"));
-		material.addFloat("specularIntensity", 0.5f);
-		material.addFloat("specularPower", 4);
-		float baseBias = 0.03f/2.0f;
-		material.addFloat("dispMapScale", 0.03f);
-		material.addFloat("dispMapBias", -baseBias + baseBias * -0.5f);
+		material.addFloat("specularIntensity", 1);
+		material.addFloat("specularPower", 8);
 
 		Material material2 = new Material();//new Texture("test.png"), new Vector3f(1,1,1), 1, 8);
 		material2.addTexture("diffuse", new Texture("bricks2.jpg"));
 		material2.addTexture("normalMap", new Texture("bricks2_normal.jpg"));
-		material2.addTexture("dispMap", new Texture("bricks2_disp.jpg"));
 		material2.addFloat("specularIntensity", 1);
 		material2.addFloat("specularPower", 8);
-		baseBias = 0.04f/2.0f;
-		material2.addFloat("dispMapScale", 0.04f);
-		material2.addFloat("dispMapBias", -baseBias + baseBias * -1f);
 
 		Mesh tempMesh = new Mesh("monkey3.obj");
 
-		MeshRenderer meshRenderer = new MeshRenderer(mesh, material2);
+		MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
 
 		GameObject planeObject = new GameObject();
 		planeObject.addComponent(meshRenderer);
 		planeObject.getTransform().getPos().set(0, -1, 5);
 
 		GameObject directionalLightObject = new GameObject();
-		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(1,1,1), 0.4f);
+		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0,0,1), 0.4f);
 
 		directionalLightObject.addComponent(directionalLight);
 

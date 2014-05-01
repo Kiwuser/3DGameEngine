@@ -1,6 +1,7 @@
 package com.base.engine.components;
 
 import com.base.engine.core.CoreEngine;
+import com.base.engine.rendering.RenderingEngine;
 import com.base.engine.core.Vector3f;
 import com.base.engine.rendering.Shader;
 
